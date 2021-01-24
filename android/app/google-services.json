@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "556190294902",
+    "firebase_url": "https://capstone-piggery.firebaseio.com",
+    "project_id": "capstone-piggery",
+    "storage_bucket": "capstone-piggery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556190294902:android:f7b04ef9eb859a0b99d057",
+        "android_client_info": {
+          "package_name": "com.himanshuchauhan.app_frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556190294902-1uuo2t9sh04lhv2aq58c0tqrs6h01rdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChIG7EhTnqD_aqVsqos7lfFFoi0pbfIbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556190294902-1uuo2t9sh04lhv2aq58c0tqrs6h01rdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556190294902:android:0faa8764fa81219799d057",
+        "android_client_info": {
+          "package_name": "lester.cadoas.flutter_customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556190294902-1uuo2t9sh04lhv2aq58c0tqrs6h01rdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChIG7EhTnqD_aqVsqos7lfFFoi0pbfIbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556190294902-1uuo2t9sh04lhv2aq58c0tqrs6h01rdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,6 +11,8 @@ class Pig {
   String vaccinated;
   bool isArchive;
   String remarks;
+  String vaccineName, color, birth, place, vaccineType, range;
+  String id;
   DocumentReference reference;
 
   Pig.fromMap(Map<String, dynamic> map, {this.reference})
@@ -25,6 +27,13 @@ class Pig {
         vaccinated = map['vaccinatedDate'],
         isArchive = map['isArchive'],
         price = map['price'],
+        vaccineName = map['vaccineName'],
+        color = map['pigColor'],
+        birth = map['dateBirth'],
+        place = map['placeOrigin'],
+        vaccineType = map['vaccineType'],
+        range = map['range'],
+        id = reference.documentID,
         remarks = map['remarks'];
 
   Pig.fromSnapshot(DocumentSnapshot snapshot)

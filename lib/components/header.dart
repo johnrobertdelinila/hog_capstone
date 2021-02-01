@@ -3,7 +3,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter_customer/services/shoppingBagService.dart';
 import 'package:flutter_customer/services/productService.dart';
 import 'package:flutter_customer/components/item/customTransition.dart';
-import 'package:flutter_customer/pages/products/particularItem.dart';
+import 'package:flutter_customer/pages/products/particularPig.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;

@@ -2,7 +2,7 @@ import 'package:flutter_customer/services/productService.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_customer/components/item/customTransition.dart';
-import 'package:flutter_customer/pages/products/particularItem.dart';
+import 'package:flutter_customer/pages/products/particularPig.dart';
 import 'package:flutter_customer/components/header.dart';
 import 'package:flutter_customer/components/sidebar.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;

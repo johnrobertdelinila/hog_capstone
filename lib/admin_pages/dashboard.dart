@@ -158,7 +158,7 @@ class _MainPageState extends State<Dashboard>
                     child: Padding
                     (
                       padding: const EdgeInsets.all(16.0),
-                      child: Icon(Icons.bubble_chart_outlined, color: Colors.white, size: 30.0),
+                      child: Icon(Icons.monetization_on, color: Colors.white, size: 30.0),
                     )
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 16.0)),
@@ -218,7 +218,7 @@ class _MainPageState extends State<Dashboard>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>
                             [
-                              Text('Sells', style: TextStyle(color: Colors.green)),
+                              Text('Sales', style: TextStyle(color: Colors.green)),
                               _numOfObjects('orders', 128),
                             ],
                           ),
@@ -269,7 +269,7 @@ class _MainPageState extends State<Dashboard>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>
                     [
-                      Text('Total Pigs', style: TextStyle(color: Colors.redAccent)),
+                      Text('Total Hogs', style: TextStyle(color: Colors.redAccent)),
                       _numOfObjects("pigs", 0)
                     ],
                   ),
@@ -282,7 +282,7 @@ class _MainPageState extends State<Dashboard>
                       child: Padding
                       (
                         padding: EdgeInsets.all(16.0),
-                        child: Icon(Icons.shop, color: Colors.white, size: 30.0),
+                        child: Icon(Icons.article, color: Colors.white, size: 30.0),
                       )
                     )
                   )

@@ -60,7 +60,7 @@ Widget sidebar(BuildContext context){
               ListTile(
                 leading: Icon(Icons.star),
                 title: Text(
-                  'RESERVE PIGS',
+                  'RESERVE HOGS',
                   style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ Widget sidebar(BuildContext context){
                   Navigator.pushReplacementNamed(context, '/bag', arguments: args);
                 },
               ),
-              ListTile(
+              /*ListTile(
                 leading: Icon(Icons.search),
                 title: Text(
                   'SEARCH',
@@ -87,7 +87,7 @@ Widget sidebar(BuildContext context){
                       letterSpacing: 1.0
                   ),
                 ),
-              ),
+              ),*/
               ListTile(
                 leading: Icon(Icons.local_shipping),
                 title: Text(

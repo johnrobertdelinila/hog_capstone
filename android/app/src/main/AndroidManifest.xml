@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="lester.cadoas.flutter_customer">
    <application
-        android:label="flutter_customer"
+        android:label="Hog Mart"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

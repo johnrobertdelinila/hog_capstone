@@ -61,7 +61,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                   elevation: 0,
                   child: ListTile(
                     title: Text('Payment'),
-                    trailing: Text(/*'Visa ${orderDetails['selectedCard']}'*/ "Online payment"),
+                    trailing: Text(/*'Visa ${orderDetails['selectedCard']}'*/ "CASH"),
 
                   ),
                 ),
@@ -97,7 +97,41 @@ class _PlaceOrderState extends State<PlaceOrder> {
                       height: 50.0,
                       child: FlatButton(
                         onPressed: () {
-                          placeNewOrder();
+
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24.0)
+                                ),
+                                title: Text('Are you sure ?'),
+                                content: Text('Do you want to checkout this Hog?'),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    onPressed: () => Navigator.of(context).pop(false),
+                                    child: Text(
+                                        'No',
+                                        style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black
+                                        )
+                                    ),
+                                  ),
+                                  FlatButton(
+                                    onPressed: () => placeNewOrder(),
+                                    child: Text(
+                                        'Yes',
+                                        style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red
+                                        )
+                                    ),
+                                  )
+                                ],
+                              ),
+                          );
                         },
                         child: const Text(
                             'Place order',

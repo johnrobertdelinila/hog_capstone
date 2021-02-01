@@ -122,6 +122,7 @@ class ProductService{
     itemDetail['pigColor'] = prodRef.data["pigColor"];
     itemDetail['dateBirth'] = prodRef.data["dateBirth"];
     itemDetail['placeOrigin'] = prodRef.data["placeOrigin"];
+    itemDetail['range'] = prodRef.data["range"];
     itemDetail['timestamp'] = prodRef.data["timestamp"];
     itemDetail['productId'] = productId;
     return itemDetail;

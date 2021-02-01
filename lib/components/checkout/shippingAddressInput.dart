@@ -77,7 +77,7 @@ class _ShippingAddressInputState extends State<ShippingAddressInput> {
           child: Theme(
             child: TextFormField(
               style: TextStyle(fontSize: 16.0),
-              decoration: customBorder('PIN code', Icons.code),
+              decoration: customBorder('Zip code', Icons.code),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 WhitelistingTextInputFormatter(RegExp(r"^[^._]+$")),

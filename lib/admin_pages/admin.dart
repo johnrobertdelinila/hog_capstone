@@ -33,7 +33,24 @@ class _AdminState extends State<AdminDashboard> {
           toolbarHeight: 110,
           title: Column(
             children: [
-              Text('Administrator', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 30.0)),
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Hog Administrator', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 30.0)),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      'pigIcon.png',
+                      width: 45.0,
+                    )),
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -86,7 +103,7 @@ class _AdminState extends State<AdminDashboard> {
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.change_history),
-                  title: Text("PIGS"),
+                  title: Text("HOGS"),
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) => PigTable()));
                   },

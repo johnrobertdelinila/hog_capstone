@@ -1,12 +1,16 @@
 
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_customer/objects/pig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-import 'add_product.dart';
 
 class PigTable extends StatefulWidget {
   @override
@@ -15,10 +19,29 @@ class PigTable extends StatefulWidget {
 
 class PigTableState extends State<PigTable> {
 
+  GlobalKey globalKey = new GlobalKey();
+
   @override
   void initState() {
     _getRemarks();
   }
+
+  Future<Uint8List> toQrImageData(String text) async {
+    try {
+      final image = await QrPainter(
+        data: text,
+        version: QrVersions.auto,
+        gapless: false,
+        color: Color(0xff000000),
+        emptyColor: Color(0xffffffff0),
+      ).toImage(300);
+      final a = await image.toByteData(format: ImageByteFormat.png);
+      return a.buffer.asUint8List();
+    } catch (e) {
+      throw e;
+    }
+  }
+
 
   bool breedOrder = false;
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
@@ -71,6 +94,60 @@ class PigTableState extends State<PigTable> {
                 value: pig.remarks == null ? "None" : pig.remarks,
               ),
             ),),
+            DataCell(Center(
+              child: IconButton(
+                icon: Icon(Icons.qr_code,),
+                color: Colors.blue,
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24.0)
+                      ),
+                      title: Text('QR Code of ' + toBeginningOfSentenceCase(pig.name)),
+                      content: Container(
+                        height: 300,
+                        width: 300,
+                        child: QrImage(
+                          data: pig.id,
+                          version: QrVersions.auto,
+                          size: 20,
+                          gapless: false,
+                          embeddedImage: AssetImage('assets/pigIcon.png'),
+                          embeddedImageStyle: QrEmbeddedImageStyle(
+                            size: Size(60, 60),
+                          ),
+                        ),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () => toQrImageData(pig.id),
+                          child: Text(
+                              'Download',
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red
+                              )
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black
+                              )
+                          ),
+                        ),
+                      ],
+                  ));
+                },
+              ),
+            )),
           ]
       );
     }).toList();
@@ -128,6 +205,11 @@ class PigTableState extends State<PigTable> {
   @override
   Widget build(BuildContext context) {
 
+    Size size = MediaQuery.of(context).size;
+
+    double itemHeight = 20;
+    double itemWidth = 20;
+
     return Scaffold(
       appBar: AppBar(title: Text("Pigs")),
       body: Container(
@@ -146,7 +228,7 @@ class PigTableState extends State<PigTable> {
                 color: Colors.pink,
                 textColor: Colors.white,
                 child: Text(
-                  'Add Pig',
+                  'Add Hog',
                   style: TextStyle(
                       fontSize: 17.0,
                       fontWeight: FontWeight.bold
@@ -158,96 +240,166 @@ class PigTableState extends State<PigTable> {
                 },
               ),
             ),
+            ButtonTheme(
+              minWidth: 250.0,
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(color: Colors.pink)
+                ),
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                color: Colors.blue,
+                textColor: Colors.white,
+                child: Text(
+                  'Generate QRS',
+                  style: TextStyle(
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.0)
+                        ),
+                        title: Text('QR Code'),
+                        content: Container(
+                          height: 1000,
+                          width: 1000,
+                          child: SliverGrid(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                childAspectRatio: (itemWidth / itemHeight),
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 10.0,
+                                crossAxisSpacing: 10.0,
+
+                              ),
+                              delegate: SliverChildBuilderDelegate((BuildContext context, int index){
+                                return Container(
+                                  width: 50,
+                                  height: 50,
+                                  child: QrImage(
+                                    data: "asdadsf",
+                                    version: QrVersions.auto,
+                                    size: 20,
+                                    gapless: false,
+                                    embeddedImage: AssetImage('assets/pigIcon.png'),
+                                    embeddedImageStyle: QrEmbeddedImageStyle(
+                                      size: Size(10, 10),
+                                    ),
+                                  ),
+                                );
+                              },
+                                  childCount: 8
+                              )
+                          ),
+                        )
+                      )
+                  );
+                },
+              ),
+            ),
             SizedBox(height: 10,),
             StreamBuilder(
               stream: Firestore.instance.collection("pigs").snapshots(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) return LinearProgressIndicator();
-                return DataTable(
-                  sortColumnIndex: 0,
-                  sortAscending: this.breedOrder,
-                  columns: <DataColumn>[
-                    DataColumn(
-                        label: Text(
-                          'Breed',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Breed of pig",
-                        onSort: (columnIndex, ascending) {
-                          setState(() {
-                            this.breedOrder = ascending;
-                          });
-                        }
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Cage',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Cage of a pig"
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Price per weight',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(fontWeight: FontWeight.bold),  
-                        ),
-                        tooltip: "Price of a pig"
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Weight',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Price of a pig"
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Age',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Price of a pig"
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Gender',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Price of a pig"
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Vaccinated Date',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Price of a pig"
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Edit',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Edit pig"
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Archive',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Archive pig"
-                    ),
-                    DataColumn(
-                        label: Text(
-                          'Remarks',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        tooltip: "Remarks of Pig"
-                    ),
-                  ],
-                  rows: _createRows(snapshot.data),
+                return Expanded(
+                  child: DataTable(
+                    sortColumnIndex: 0,
+                    sortAscending: this.breedOrder,
+                    columns: <DataColumn>[
+                      DataColumn(
+                          label: Text(
+                            'Breed',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Breed of pig",
+                          onSort: (columnIndex, ascending) {
+                            setState(() {
+                              this.breedOrder = ascending;
+                            });
+                          }
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Cage',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Cage of a pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Price weight',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Price of a pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Weight',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Price of a pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Age',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Price of a pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Gender',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Price of a pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Vaccine Date',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Price of a pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Edit',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Edit pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Archive',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Archive pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'Remarks',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "Remarks of Pig"
+                      ),
+                      DataColumn(
+                          label: Text(
+                            'QR',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          tooltip: "QR Code of Pig"
+                      ),
+                    ],
+                    rows: _createRows(snapshot.data),
 
+                  ),
                 );
               },
             )

@@ -61,7 +61,7 @@ class Start extends StatelessWidget{
                 Padding(
                   padding: const EdgeInsets.fromLTRB(48.0, 35.0, 48.0, 0.0),
                   child: Text(
-                    'Get updates on new breed Pigs sales with our mobile app',
+                    'Get updates on new breed Hogs sales with our mobile app',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 19.0,

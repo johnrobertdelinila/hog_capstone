@@ -35,6 +35,7 @@ class _AddProductState extends State<AddProduct> {
   TextEditingController colorController = TextEditingController();
   TextEditingController birthDateController = TextEditingController();
   TextEditingController placeOriginController = TextEditingController();
+  TextEditingController rangeController = TextEditingController();
 
   List<DocumentSnapshot> brands = <DocumentSnapshot>[];
   List<DocumentSnapshot> categories = <DocumentSnapshot>[];
@@ -183,9 +184,15 @@ class _AddProductState extends State<AddProduct> {
       weightController.text = pig.weight.toString();
       ageController.text = pig.age.toString();
       vaccineDateController.text = pig.vaccinated;
+      vaccineNameController.text = pig.vaccineName;
+      colorController.text = pig.color;
+      birthDateController.text = pig.birth;
+      placeOriginController.text = pig.place;
+      rangeController.text = pig.range;
       _currentCategory = pig.name;
       _currentBrand = pig.subBreed;
       _currentGender = pig.gender;
+      _currentVaccineType = pig.vaccineType;
     }
 
     return Scaffold(
@@ -200,7 +207,7 @@ class _AddProductState extends State<AddProduct> {
           onPressed: (){Navigator.of(context).pop(true);},
         ),
         title: Text(
-          "Add New Pig",
+          "Add New Hog",
           style: TextStyle(color: black),
         ),
       ),
@@ -217,19 +224,22 @@ class _AddProductState extends State<AddProduct> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: OutlineButton(
-                              borderSide: BorderSide(
-                                  color: grey.withOpacity(0.5), width: 2.5),
-                              onPressed: () {
-                                _selectImage(
-                                  ImagePicker.pickImage(
-                                    source: ImageSource.gallery),
-                                  1);
-                              },
-                              child: _displayChild1()),
+                      Visibility(
+                        visible: kIsWeb ? false : true,
+                        child: Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: OutlineButton(
+                                borderSide: BorderSide(
+                                    color: grey.withOpacity(0.5), width: 2.5),
+                                onPressed: () {
+                                  _selectImage(
+                                    ImagePicker.pickImage(
+                                      source: ImageSource.gallery),
+                                    1);
+                                },
+                                child: _displayChild1()),
+                          ),
                         ),
                       ),
                       Visibility(
@@ -334,11 +344,11 @@ class _AddProductState extends State<AddProduct> {
                         controller: priceController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          hintText: 'Price per weight',
+                          hintText: 'Price',
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'You must enter the price per weight of the pig.';
+                            return 'You must enter the price of the pig.';
                           }else {
                             return null;
                           }
@@ -497,10 +507,31 @@ class _AddProductState extends State<AddProduct> {
                     ),
                   ),
 
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: 200),
+                      child: TextFormField(
+                        controller: rangeController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          hintText: 'Range Price',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'You must enter the range per kilo of the pig.';
+                          }else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+
                   FlatButton(
                     color: red,
                     textColor: white,
-                    child: Text(pig != null ? 'UPDATE PIG' : 'ADD PIG'),
+                    child: Text(pig != null ? 'UPDATE HOG' : 'ADD HOG'),
                     onPressed: () {
                       validateAndUpload();
                     },
@@ -715,6 +746,7 @@ class _AddProductState extends State<AddProduct> {
               "pigColor": colorController.text,
               "dateBirth": birthDateController.text,
               "placeOrigin": placeOriginController.text,
+              "range": rangeController.text,
               "timestamp": FieldValue.serverTimestamp()
               // "breed":_currentCategory
             });
@@ -732,6 +764,7 @@ class _AddProductState extends State<AddProduct> {
               "pigColor": colorController.text,
               "dateBirth": birthDateController.text,
               "placeOrigin": placeOriginController.text,
+              "range": rangeController.text,
               "timestamp": FieldValue.serverTimestamp()
             }, merge: true);
           }
@@ -739,7 +772,7 @@ class _AddProductState extends State<AddProduct> {
 
           _formKey.currentState.reset();
           setState(() => isLoading = false);
-          Fluttertoast.showToast(msg: 'Pig added', timeInSecForIosWeb: 2,);
+          Fluttertoast.showToast(msg: 'Hog added', timeInSecForIosWeb: 2,);
           Navigator.pop(context);
 
       } else {

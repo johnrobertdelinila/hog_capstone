@@ -35,21 +35,21 @@ List<SliderModel> getSlides(){
   SliderModel sliderModel = new SliderModel();
 
   sliderModel.setTitle('Hog Mart');
-  sliderModel.setDesc('Welcome to Pig Mart! Buy our Pigs easily and get access to app only exclusives.');
+  sliderModel.setDesc('Welcome to Hog Mart! Buy our Hogs easily and get access to app only exclusives.');
   sliderModel.setImageAssetPath('assets/pigIcon.png');
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();
 
-  sliderModel.setTitle('Quality Pig');
-  sliderModel.setDesc('Add pig to your pig cart, and buy them out later.' );
+  sliderModel.setTitle('Quality Hog');
+  sliderModel.setDesc('Add Hog to your hog cart, and buy them out later.' );
   sliderModel.setImageAssetPath('assets/onBoarding/quality-pigs.jpg');
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();
 
   sliderModel.setTitle('QR Scan');
-  sliderModel.setDesc('Search among variety of Pigs using the QR Code scan. The choice is yours.');
+  sliderModel.setDesc('Search among variety of Hogs using the QR Code scan. The choice is yours.');
   sliderModel.setImageAssetPath('assets/onBoarding/qr-code.jpg');
   slides.add(sliderModel);
 
@@ -70,7 +70,7 @@ List<SliderModel> getSlides(){
   sliderModel = new SliderModel();
 
   sliderModel.setTitle('Customer Satisfaction');
-  sliderModel.setDesc('Get high quality pigs for the best prices');
+  sliderModel.setDesc('Get high quality hogs for the best prices');
   sliderModel.setImageAssetPath('assets/onBoarding/premium-quality.png');
   slides.add(sliderModel);
 

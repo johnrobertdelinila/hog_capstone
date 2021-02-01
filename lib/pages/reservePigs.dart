@@ -9,7 +9,7 @@ import 'package:flutter_customer/components/header.dart';
 import 'package:flutter_customer/services/shoppingBagService.dart';
 import 'package:flutter_customer/components/item/customTransition.dart';
 import 'package:flutter_customer/components/sidebar.dart';
-import 'package:flutter_customer/pages/products/particularItem.dart';
+import 'package:flutter_customer/pages/products/particularPig.dart';
 import 'package:flutter_customer/components/loader.dart';
 import 'package:flutter_customer/services/productService.dart';
 
@@ -30,19 +30,19 @@ class _ShoppingBagState extends State<ShoppingBag> {
     Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
     setState(() {
       bagItemList = args['bagItems'];
-      totalPrice = setTotalPrice(args['bagItems']);
+      totalPrice = setTotalPrice(args['bagItems']).toString();
       if(args.containsKey('route')){
         route = args['route'];
       }
     });
   }
 
-  String setTotalPrice(List items){
+  int setTotalPrice(List items){
     int totalPrice = 0;
     items.forEach((item){
       totalPrice = totalPrice + (int.parse(item['price']) * item['quantity']);
     });
-    return totalPrice.toString();
+    return totalPrice;
   }
 
   String colorList(String colorName){
@@ -80,7 +80,7 @@ class _ShoppingBagState extends State<ShoppingBag> {
             ),
           ),
           content: Text(
-            'This product will be removed from cart',
+              'This Hog will be removed from cart',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20.0
@@ -251,21 +251,24 @@ class _ShoppingBagState extends State<ShoppingBag> {
                                       ),
                                     ),
                                   ),
-                                  ExpandableIcon(
-                                    theme: const ExpandableThemeData(
-                                      expandIcon: Icons.keyboard_arrow_right,
-                                      collapseIcon: Icons.keyboard_arrow_down,
-                                      iconColor: Colors.white,
-                                      iconSize: 28.0,
-                                      iconRotationAngle: math.pi / 2,
-                                      iconPadding: EdgeInsets.only(right: 5),
-                                      hasIcon: false,
+                                  Visibility(
+                                    visible: false,
+                                    child: ExpandableIcon(
+                                      theme: const ExpandableThemeData(
+                                        expandIcon: Icons.keyboard_arrow_right,
+                                        collapseIcon: Icons.keyboard_arrow_down,
+                                        iconColor: Colors.white,
+                                        iconSize: 28.0,
+                                        iconRotationAngle: math.pi / 2,
+                                        iconPadding: EdgeInsets.only(right: 5),
+                                        hasIcon: false,
+                                      ),
                                     ),
                                   )
                                 ],
                               ),
                             ),
-                            expanded: ShoppingBagExpandedList(item, colorList, openParticularItem, removeItemAlertBox)
+                            expanded: null /*ShoppingBagExpandedList(item, colorList, openParticularItem, removeItemAlertBox)*/
                         ),
                       ],
                     ),
@@ -336,7 +339,7 @@ class _ShoppingBagState extends State<ShoppingBag> {
                         onPressed: (){
                           if(bagItemList.length != 0){
                             Map<String,dynamic> args = new Map<String, dynamic>();
-                            args['price'] = totalPrice.toString();
+                            args['price'] = int.parse(totalPrice);
                             Navigator.of(context).pushNamed('/checkout/address',arguments: args);
                           }
                         },

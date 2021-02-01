@@ -107,7 +107,7 @@ class _ParticularItemState extends State<ParticularItem> {
     else if(/*colorValue == '' && colors.length != 0) showInSnackBar('Select color', Colors.red*/false);
     else{
       Map<String,dynamic> args = new Map<String, dynamic>();
-      args['price'] = itemDetails['price'] * itemDetails['weight'];
+      args['price'] = itemDetails['price'];
       args['productId'] = itemDetails['productId'];
       args['quantity'] = quantity;
       args['size'] = /*sizeValue*/null;
@@ -214,7 +214,7 @@ class _ParticularItemState extends State<ParticularItem> {
                         crossAxisAlignment: kIsWeb ? CrossAxisAlignment.center : CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            itemDetails['name'],
+                            toBeginningOfSentenceCase(itemDetails['name']),
                             style: TextStyle(
                               fontSize: 22.0,
                               fontWeight: FontWeight.bold,
@@ -223,11 +223,11 @@ class _ParticularItemState extends State<ParticularItem> {
                           ),
                           SizedBox(height: 7.0),
                           Text(
-                            "\₱ ${f.format(itemDetails['price'])} per Kilo",
+                            "Price: \₱ ${f.format(itemDetails['price'])}",
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18.0
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0
                             ),
                           ),
                           SizedBox(height: 10.0),
@@ -241,10 +241,10 @@ class _ParticularItemState extends State<ParticularItem> {
                           ),
                           SizedBox(height: 7.0),
                           Text(
-                            "\₱ ${f.format(itemDetails['price'] * itemDetails['weight'])}",
+                            "\₱ ${f.format(itemDetails['price'] / itemDetails['weight'])} per Kilo",
                             style: TextStyle(
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.normal,
                                 fontSize: 18.0
                             ),
                           ),
@@ -305,6 +305,15 @@ class _ParticularItemState extends State<ParticularItem> {
                           SizedBox(height: 10.0),
                           Text(
                             "Origin: ${itemDetails['placeOrigin']}",
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 18.0
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                          Text(
+                            "Range price per kilo: ${itemDetails['range']}",
                             style: TextStyle(
                                 color: Colors.black87,
                                 fontWeight: FontWeight.normal,
